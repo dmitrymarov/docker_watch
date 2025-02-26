@@ -1,13 +1,21 @@
 import json
+<<<<<<< HEAD
+import os
+from fastapi import FastAPI, HTTPException
+=======
 from fastapi import FastAPI, HTTPException
 from fastapi.middleware.cors import CORSMiddleware
 import os
 import psycopg2
 from psycopg2.extras import RealDictCursor
+>>>>>>> main
 from typing import List, Dict, Any, Optional
 
 app = FastAPI(title="FastAPI Docker Compose Watch Demo")
 
+<<<<<<< HEAD
+FAKE_DATA_PATH = os.path.join(os.path.dirname(__file__), "data", "fake_data.json")
+=======
 # Добавление CORS для разработки
 app.add_middleware(
     CORSMiddleware,
@@ -21,6 +29,7 @@ app.add_middleware(
 FAKE_DATA_PATH = os.path.join(os.path.dirname(__file__), "data", "fake_data.json")
 
 # Функция для загрузки фейковых данных
+>>>>>>> main
 def load_fake_data() -> List[Dict[str, Any]]:
     try:
         with open(FAKE_DATA_PATH, "r") as f:
@@ -29,6 +38,8 @@ def load_fake_data() -> List[Dict[str, Any]]:
         print(f"Ошибка загрузки фейковых данных: {e}")
         return []
 
+<<<<<<< HEAD
+=======
 # Функция для подключения к БД
 def get_db_connection():
     try:
@@ -83,10 +94,35 @@ try:
 except Exception as e:
     print(f"Ошибка при инициализации: {e}")
 
+>>>>>>> main
 @app.get("/")
 def read_root():
     return {
         "message": "FastAPI Docker Compose Watch Demo",
+<<<<<<< HEAD
+        "info": "Измените этот файл, чтобы увидеть автоматическое обновление!",
+        "endpoints": [
+            {"path": "/", "method": "GET", "description": "Этот документ"},
+            {"path": "/items", "method": "GET", "description": "Получить все элементы"},
+            {"path": "/items/{item_id}", "method": "GET", "description": "Получить элемент по ID"},
+            {"path": "/api/info", "method": "GET", "description": "Информация об API"}
+        ]
+    }
+
+@app.get("/api/info")
+def api_info():
+    return {
+        "name": "FastAPI Docker Compose Watch Demo API",
+        "version": "1.0.0",
+        "description": "Демо API для показа работы Docker Compose Watch"
+    }
+
+@app.get("/items")
+def read_items():
+    """
+    Возвращает все товары из фейковых данных
+    """
+=======
         "info": "Измените этот файл, чтобы увидеть автоматическое обновление! - Изменил",
         "endpoints": [
             {"path": "/", "method": "GET", "description": "Этот документ"},
@@ -120,11 +156,16 @@ def read_items():
             conn.close()
     
     # Если БД недоступна или произошла ошибка, используем фейковые данные
+>>>>>>> main
     return load_fake_data()
 
 @app.get("/items/{item_id}")
 def read_item(item_id: int):
     """
+<<<<<<< HEAD
+    Возвращает товар по ID из фейковых данных
+    """
+=======
     Читает элемент по ID из базы данных, если доступно подключение.
     В противном случае ищет в фейковых данных.
     """
@@ -143,6 +184,7 @@ def read_item(item_id: int):
             conn.close()
     
     # Если БД недоступна или элемент не найден, ищем в фейковых данных
+>>>>>>> main
     fake_data = load_fake_data()
     for item in fake_data:
         if item.get("id") == item_id:
