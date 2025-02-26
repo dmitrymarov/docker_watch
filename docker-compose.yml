@@ -1,0 +1,61 @@
+version: "3.9"
+
+services:
+  # Python-приложение FastAPI
+  app:
+    build: ./app
+    container_name: fastapi_app
+    ports:
+      - "8000:8000"
+    networks:
+      - my_network
+    develop:
+      watch:
+        # Синхронизация кода Python (быстрое обновление)
+        - action: sync
+          path: ./app
+          target: /app
+          ignore:
+            - "__pycache__"
+            - "*.pyc"
+            - "*.log"
+        # Пересборка при изменении зависимостей
+        - action: rebuild
+          path: ./app/requirements.txt
+  # Nginx для проксирования запросов
+  nginx:
+    build: ./nginx
+    container_name: fastapi_nginx
+    depends_on:
+      - app
+    ports:
+      - "8070:80"
+    networks:
+      - my_network
+    develop:
+      watch:
+        - action: sync+restart
+          path: ./nginx/nginx.conf
+          target: /etc/nginx/conf.d/default.conf
+
+  # Пример базы данных (для демонстрации рабочей среды)
+  db:
+    image: postgres:15-alpine
+    container_name: postgres_db
+    environment:
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=postgres
+      - POSTGRES_DB=mydb
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    ports:
+      - "5432:5432"
+    networks:
+      - my_network
+
+networks:
+  my_network:
+    driver: bridge
+
+volumes:
+  postgres_data:
