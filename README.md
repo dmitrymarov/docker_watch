@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 # Docker Compose Watch - Руководство для разработчиков
 
 Этот проект демонстрирует возможности `docker compose watch` для более удобной разработки с автоматической синхронизацией изменений, позволяя сосредоточиться на создании кода, а не на ручном перезапуске контейнеров.
@@ -184,3 +185,9 @@ docker compose watch --no-attach
 - [Официальная документация Docker Compose Watch](https://docs.docker.com/compose/file-watch/)
 - [Документация FastAPI](https://fastapi.tiangolo.com/)
 - [Документация Nginx](https://nginx.org/en/docs/)
+=======
+# docker-compose-watch-sample
+
+
+123
+>>>>>>> main
